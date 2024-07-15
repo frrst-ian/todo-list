@@ -3,16 +3,24 @@ import { Task, TaskOperations, TaskList, CreateTask, displayTasks } from './task
 const taskList = new TaskList();
 const createNewTask = new CreateTask();
 
+const codingTask = createNewTask.createTask(
+    'Sleep',
+    'Always sleep',
+    new Date(2024, 6, 30),
+    "high asf"
+);
+
+taskList.addTask(codingTask);
+
+taskList.displayDetailedTasks();
+
+
+const reviewTask = createNewTask.createTask("Review Now");
+taskList.addTask(reviewTask);
 displayTasks(taskList);
 
-const newTask = createNewTask.createTask("Code Now");
-taskList.addTask(newTask);
-displayTasks(taskList);
 
-const oldTask = createNewTask.createTask("Code Yesterday");
-taskList.addTask(oldTask);
-displayTasks(taskList);
+reviewTask.setCompleted(true);
 
-taskList.deleteTask(oldTask);
-
-displayTasks(taskList);
+console.log("After updates:");
+taskList.displayDetailedTasks();

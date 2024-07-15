@@ -1,6 +1,14 @@
 export class Task {
-    constructor(name) {
+    constructor(name, description = '', dueDate = null, priority = 'medium') {
         this.name = name;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.completed = false;
+    }
+
+    setCompleted(status) {
+        this.completed = status;
     }
 }
 
@@ -36,11 +44,20 @@ export class TaskList extends TaskOperations {
         return [...this.tasks];
     }
 
+    displayDetailedTasks() {
+        this.tasks.forEach((task, index) => {
+            console.log(`${index +1}. ${task.name} - Priority: ${task.priority}`);
+            console.log(`Description: ${task.description}`);
+            console.log(`Due Date: ${task.dueDate ? task.dueDate.toDateString() : "Not Set"}`);
+            console.log(`Status: ${task.completed ? "Completed" : "Pending"}`);
+        })
+    }
+
 }
 
 export class CreateTask {
-    createTask(name) {
-        return new Task(name);
+    createTask(name, description = '', dueDate = null, priority = 'medium') {
+        return new Task(name, description, dueDate, priority);
     }
 }
 
@@ -52,7 +69,7 @@ export function displayTasks(taskList) {
     } else {
         console.log("Current task:");
         tasks.forEach((task, index) => {
-            console.log(`${index + 1}. ${task.name}`);
+            console.log(`${index + 1}. ${task.name} - Priority: ${task.priority} - Due: ${task.dueDate ? task.dueDate.toDateString() : 'Not set'}`);
         });
     }
     console.log();

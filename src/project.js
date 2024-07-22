@@ -17,7 +17,7 @@ export class Project {
         }
     }
 
-    getTask() {
+    getTasks() {
         return [...this.tasks];
     }
 

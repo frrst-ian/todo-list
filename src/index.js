@@ -1,6 +1,7 @@
 // index.js
 import { TaskList, CreateTask, displayTasks } from './task.js';
 import { ProjectList, CreateProject, displayProject } from './project.js';
+import './styles.css';
 
 // Create global lists
 const projectList = new ProjectList();
@@ -28,7 +29,7 @@ const reviewTask = addTask("Review Now");
 
 // Display tasks
 console.log("Tasks in My Project:");
-defaultProject.getTask().forEach(task => {
+defaultProject.getTasks().forEach(task => {
     console.log(`- ${task.name}`);
 });
 
@@ -37,3 +38,4 @@ displayTasks(taskList);
 
 // Display projects
 displayProject(projectList);
+

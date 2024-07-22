@@ -49,7 +49,7 @@ export class TaskList extends TaskOperations {
 
     }
 
-    getTask() {
+    getTasks() {
         return [...this.tasks];
     }
 
@@ -71,7 +71,7 @@ export class CreateTask {
 }
 
 export function displayTasks(taskList) {
-    const tasks = taskList.getTask();
+    const tasks = taskList.getTasks();
     if (tasks.length === 0) {
         console.log("No tasks in the list");
     } else {

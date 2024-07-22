@@ -4,11 +4,11 @@ class Project {
         this.todos = [];
     }
 
-    addTask(task) {
+    addTodo(todo) {
         this.todos.push(todo);
     }
 
-    deleteTask(task) {
+    deleteTodo(todo) {
         this.todos.splice(index, 1);
     }
 }

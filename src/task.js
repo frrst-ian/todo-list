@@ -5,8 +5,11 @@ export class Task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.completed = false;
+        this.project = null;
     }
-
+    setProject(project) {
+        this.project = project;
+    }
     setCompleted(status) {
         this.completed = status;
     }
@@ -15,6 +18,7 @@ export class Task {
 export class TaskOperations {
     addTask(task) { }
     deleteTask(task) { }
+    renameTask(task) { }
     getTask() { }
 }
 
@@ -40,13 +44,18 @@ export class TaskList extends TaskOperations {
         }
     }
 
+    renameTask(task) {
+        const newTaskName = task;
+
+    }
+
     getTask() {
         return [...this.tasks];
     }
 
     displayDetailedTasks() {
         this.tasks.forEach((task, index) => {
-            console.log(`${index +1}. ${task.name} - Priority: ${task.priority}`);
+            console.log(`${index + 1}. ${task.name} - Priority: ${task.priority}`);
             console.log(`Description: ${task.description}`);
             console.log(`Due Date: ${task.dueDate ? task.dueDate.toDateString() : "Not Set"}`);
             console.log(`Status: ${task.completed ? "Completed" : "Pending"}`);
@@ -64,14 +73,15 @@ export class CreateTask {
 export function displayTasks(taskList) {
     const tasks = taskList.getTask();
     if (tasks.length === 0) {
-        console.log("No task in the list");
-
+        console.log("No tasks in the list");
     } else {
-        console.log("Current task:");
+        console.log("Current tasks:");
         tasks.forEach((task, index) => {
-            console.log(`${index + 1}. ${task.name} - Priority: ${task.priority} - Due: ${task.dueDate ? task.dueDate.toDateString() : 'Not set'}`);
+            console.log(`${index + 1}. ${task.name} 
+            - Priority: ${task.priority}
+             - Due: ${task.dueDate ? task.dueDate.toDateString() : 'Not set'} 
+             - Project: ${task.project ? task.project.name : 'No project'}`);
         });
     }
     console.log();
-
 }

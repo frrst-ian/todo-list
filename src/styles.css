@@ -3,9 +3,20 @@
 *::after {
   box-sizing: border-box;
 }
+
 * {
   margin: 0;
   color: white;
+}
+
+
+@font-face {
+  font-family: 'norwesterregular';
+  src: url('./assets/fonts/norwester-webfont.woff2') format('woff2'),
+       url('./assets/fonts/norwester-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
 }
 
 body {
@@ -14,6 +25,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+#logo {
+  font-family: 'norwesterregular';
+  text-align: start;
+  position: absolute;
+  top: 50px;
+  right:100px;
+  font-size: 2rem;
+  color: #f43f5e;
+
+
 }
 
 div#wrapper {
@@ -35,19 +59,96 @@ div#sidebar {
   border-radius: 16px;
 }
 
-button#add-task-btn {
-    color: white;
-    font-size: 1rem;
-    background-color: #f43f5e;
-    margin-top: 40px;
-    padding:10px;
-    border: none;
-    border-radius: 10px;
-    width: 116px;
-    cursor: pointer;
+button#add-task-btn,
+button#add-project-btn {
+  color: white;
+  font-size: 1rem;
+  background-color: #f43f5e;
+  margin-top: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  width: 116px;
+  cursor: pointer;
 }
 
-#title {
-    color: #e2e8f0;
-    font-weight: 550;
+#title-project {
+  color: #e0e4e9;
+  font-weight: 550;
+}
+
+#project-list {
+  list-style-type: none;
+  cursor: pointer;
+  margin-right: 40px;
+}
+li {
+  padding: 5px;
+  border-radius: 12px;
+}
+li:hover,
+li.active {
+  background-color: #1e293b;
+  border-radius: 10px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #334155;
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 20px;
+  position: absolute;
+  top: 150px;
+  right: 620px;
+}
+
+input[type="text"],
+input[type="date"] {
+  border: 1px solid #334155;
+}
+#new-task-title,
+#new-task-description,
+#new-task-due-date,
+#new-task-priority,
+#new-task-notes,
+#new-project-name,
+#title,
+#description,
+#dueDate,
+#priority,
+#notes {
+  background-color: #64748b;
+  border-radius: 12px;
+  padding: 4px;
+  font-size: 1rem;
+  outline: none;
+}
+
+#add-button,
+#close-modal,
+#add-project-button,
+button[type=" submit"],
+#delete-todo {
+  background-color: #f43f5e;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+#main {
+  background-color: #334155;
+  padding: 24px;
+  margin-left: 24px;
+  border-radius: 16px;
 }

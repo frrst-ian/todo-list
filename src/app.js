@@ -39,8 +39,10 @@ class TodoApp {
     }
 
     deleteTodo(todoIndex) {
-        this.currentProject.removeTodo(todoIndex);
+        this.currentProject.deleteTodo(todoIndex);
         this.saveToLocalStorage();
+        this.saveToLocalStorage();
+        this.render();
     }
 
     saveToLocalStorage() {
@@ -69,10 +71,16 @@ class TodoApp {
 
     render() {
         document.body.innerHTML = '';
+        const logo = document.createElement('p');
+        logo.id = 'logo';
+        document.body.appendChild(logo);
+        logo.textContent = "NorthDo";
+
         const wrapperDiv = document.createElement('div');
         wrapperDiv.id = 'wrapper';
         document.body.appendChild(wrapperDiv);
 
+        
         const sidebarDiv = document.createElement('div');
         sidebarDiv.id = 'sidebar';
         wrapperDiv.appendChild(sidebarDiv);
@@ -84,7 +92,7 @@ class TodoApp {
         sidebarDiv.appendChild(addTaskButton);
 
         const projectsTitle = document.createElement('p');
-        projectsTitle.id = 'title';
+        projectsTitle.id = 'title-project';
         projectsTitle.textContent = 'My Projects';
         sidebarDiv.appendChild(projectsTitle);
 
@@ -95,6 +103,9 @@ class TodoApp {
         this.projects.forEach((project, index) => {
             const projectItem = document.createElement('li');
             projectItem.textContent = project.name;
+            if (project === this.currentProject) {
+                projectItem.classList.add('active');
+            }
             projectItem.addEventListener('click', () => this.setCurrentProject(index));
             projectList.appendChild(projectItem);
         })
@@ -124,21 +135,21 @@ class TodoApp {
     showAddTaskForm() {
         const modalContainer = document.createElement('div');
         modalContainer.className = 'modal-container';
-    
+
         const modalContent = document.createElement('div');
         modalContent.className = 'modal-content';
-    
+
         const form = document.createElement('form');
-        
+
         const title = document.createElement('h2');
         title.textContent = 'Add New Task';
         form.appendChild(title);
-    
+
         const createFormElement = (labelText, inputType, inputId, isRequired = false) => {
             const label = document.createElement('label');
             label.setAttribute('for', inputId);
             label.textContent = labelText;
-    
+
             const input = document.createElement(inputType === 'textarea' ? 'textarea' : 'input');
             input.id = inputId;
             if (inputType !== 'textarea') {
@@ -147,20 +158,20 @@ class TodoApp {
             if (isRequired) {
                 input.required = true;
             }
-    
+
             form.appendChild(label);
             form.appendChild(input);
         };
-    
+
         createFormElement('Title:', 'text', 'new-task-title', true);
         createFormElement('Description:', 'textarea', 'new-task-description');
         createFormElement('Due Date:', 'date', 'new-task-due-date', true);
-    
+
         const priorityLabel = document.createElement('label');
         priorityLabel.setAttribute('for', 'new-task-priority');
         priorityLabel.textContent = 'Priority:';
         form.appendChild(priorityLabel);
-    
+
         const prioritySelect = document.createElement('select');
         prioritySelect.id = 'new-task-priority';
         ['low', 'medium', 'high'].forEach(priority => {
@@ -170,25 +181,26 @@ class TodoApp {
             prioritySelect.appendChild(option);
         });
         form.appendChild(prioritySelect);
-    
+
         createFormElement('Notes:', 'textarea', 'new-task-notes');
-    
+
         const buttonGroup = document.createElement('div');
         buttonGroup.className = 'button-group';
-    
+
         const addButton = document.createElement('button');
+        addButton.id = "add-button";
         addButton.type = 'submit';
         addButton.textContent = 'Add Task';
         buttonGroup.appendChild(addButton);
-    
+
         const cancelButton = document.createElement('button');
         cancelButton.type = 'button';
         cancelButton.textContent = 'Cancel';
         cancelButton.id = 'close-modal';
         buttonGroup.appendChild(cancelButton);
-    
+
         form.appendChild(buttonGroup);
-    
+
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const title = document.getElementById('new-task-title').value;
@@ -196,16 +208,16 @@ class TodoApp {
             const dueDate = document.getElementById('new-task-due-date').value;
             const priority = document.getElementById('new-task-priority').value;
             const notes = document.getElementById('new-task-notes').value;
-    
+
             this.createTodo(title, description, dueDate, priority, notes);
             modalContainer.remove();
             this.render();
         });
-    
+
         cancelButton.addEventListener('click', () => {
             modalContainer.remove();
         });
-    
+
         modalContent.appendChild(form);
         modalContainer.appendChild(modalContent);
         document.body.appendChild(modalContainer);
@@ -214,39 +226,40 @@ class TodoApp {
     showAddProjectForm() {
         const modalContainer = document.createElement('div');
         modalContainer.className = 'modal-container';
-    
+
         const modalContent = document.createElement('div');
         modalContent.className = 'modal-content';
-    
+
         const form = document.createElement('form');
-        
+
         const title = document.createElement('h2');
         title.textContent = 'Add New Project';
         form.appendChild(title);
-    
+
         const nameInput = document.createElement('input');
         nameInput.type = 'text';
         nameInput.id = 'new-project-name';
         nameInput.placeholder = 'Project Name';
         nameInput.required = true;
         form.appendChild(nameInput);
-    
+
         const buttonGroup = document.createElement('div');
         buttonGroup.className = 'button-group';
-    
+
         const addButton = document.createElement('button');
         addButton.type = 'submit';
         addButton.textContent = 'Add Project';
+        addButton.id = 'add-project-button';
         buttonGroup.appendChild(addButton);
-    
+
         const cancelButton = document.createElement('button');
         cancelButton.type = 'button';
         cancelButton.textContent = 'Cancel';
         cancelButton.id = 'close-modal';
         buttonGroup.appendChild(cancelButton);
-    
+
         form.appendChild(buttonGroup);
-    
+
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const projectName = nameInput.value.trim();
@@ -256,11 +269,11 @@ class TodoApp {
                 this.render();
             }
         });
-    
+
         cancelButton.addEventListener('click', () => {
             modalContainer.remove();
         });
-    
+
         modalContent.appendChild(form);
         modalContainer.appendChild(modalContent);
         document.body.appendChild(modalContainer);
@@ -361,12 +374,12 @@ class TodoApp {
                 priority: form.priority.value,
                 notes: form.notes.value
             };
-            this.editTodo(index, updatedTodo);
+            this.editTodo(todoIndex, updatedTodo);
             modalContainer.remove();
         });
 
         deleteButton.addEventListener('click', () => {
-            this.deleteTodo(index);
+            this.deleteTodo(todoIndex);
             modalContainer.remove();
         });
 

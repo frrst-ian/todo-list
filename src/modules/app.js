@@ -1,7 +1,6 @@
 import { format } from 'date-fns';
 import Project from './project.js';
 import Todo from './todo.js';
-import './styles.css';
 
 class TodoApp {
     constructor() {
